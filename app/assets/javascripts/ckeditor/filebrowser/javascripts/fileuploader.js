@@ -336,11 +336,22 @@ qq.FileUploaderBasic.prototype = {
             method: this._options.method,   
             onProgress: function(id, fileName, loaded, total){                
                 self._onProgress(id, fileName, loaded, total);
-                self._options.onProgress(id, fileName, loaded, total);                    
+                self._options.onProgress(id, fileName, loaded, total); 
+                console.log('fileUploader - onProgress', {
+                    id: id,
+                    fileName: fileName,
+                    loaded: loaded,
+                    total: total
+                  });                   
             },            
             onComplete: function(id, fileName, result){
                 self._onComplete(id, fileName, result);
                 self._options.onComplete(id, fileName, result);
+                console.log('fileUploader - onComplete', {
+                    id: id,
+                    fileName: fileName,
+                    result: result
+                  }); 
             },
             onCancel: function(id, fileName){
                 self._onCancel(id, fileName);
@@ -366,10 +377,22 @@ qq.FileUploaderBasic.prototype = {
     _onSubmit: function(id, fileName){
         this._filesInProgress++;  
     },
-    _onProgress: function(id, fileName, loaded, total){        
+    _onProgress: function(id, fileName, loaded, total){ 
+        console.log('fileUploader - _onProgress2', {
+            id: id,
+            fileName: fileName,
+            loaded: loaded,
+            total: total
+          });      
     },
     _onComplete: function(id, fileName, result){
-        this._filesInProgress--;                 
+        this._filesInProgress--;      
+        console.log('fileUploader - onComplete2', {
+            id: id,
+            fileName: fileName,
+            result: result
+          });      
+
         if (result.error){
             this._options.showMessage(result.error);
         } else {
@@ -643,6 +666,11 @@ qq.extend(qq.FileUploader.prototype, {
         qq.setText(size, text);         
     },
     _onComplete: function(id, fileName, result){
+        console.log('fileUploader - _onComplete3', {
+            id: id,
+            fileName: fileName,
+            result: result
+          });   
         qq.FileUploaderBasic.prototype._onComplete.apply(this, arguments);
 
         // mark completed
@@ -1258,6 +1286,12 @@ qq.extend(qq.UploadHandlerXhr.prototype, {
         xhr.send(file);
     },
     _onComplete: function(id, xhr){
+        console.log('fileUploader - _onComplete4', {
+            id: id,
+            xhr: xhr,
+            files_id: this._files[id]
+          });   
+
         // the request was aborted/cancelled
         if (!this._files[id]) return;
         

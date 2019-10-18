@@ -166,7 +166,10 @@ qq.extend(qq.FileUploaderInput.prototype, {
         } else {
             text = this._formatSize(total);
         }
-
+        console.log('application - _onProgress', {
+          size: size,
+          text: text
+        });
         qq.setText(size, text);
     },
     _onComplete: function(id, fileName, result){
@@ -174,8 +177,12 @@ qq.extend(qq.FileUploaderInput.prototype, {
 
         var item = this._getItemByFileId(id);
         var asset = result.asset ? result.asset : result;
-
+        console.log('application - _onComplete', {
+          item: item,
+          asset: asset
+        });
         if (asset && asset.id){
+            console.log('application - _onComplete - success');
             qq.addClass(item, this._classes.success);
 
             asset.size = this._formatSize(asset.size);
@@ -183,6 +190,7 @@ qq.extend(qq.FileUploaderInput.prototype, {
 
             $(item).replaceWith($(this._options.template_id).tmpl(asset));
         } else {
+            console.log('application - _onComplete - fail');
             qq.addClass(item, this._classes.fail);
         }
     },
