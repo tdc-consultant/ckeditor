@@ -20,7 +20,7 @@ platforms :ruby do
   group :active_record do
     gem 'carrierwave'
     gem 'dragonfly'
-    gem 'mini_magick'
+    gem 'mini_magick', '~> 4.9.5'
     gem 'paperclip', '~> 6.1.0'
   end
 
