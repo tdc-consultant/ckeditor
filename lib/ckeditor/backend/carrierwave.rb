@@ -42,7 +42,9 @@ module Ckeditor
         end
 
         def magick
-          @magick ||= ::MiniMagick::Image.new(current_path)
+          MiniMagick.with_cli(:graphicsmagick) do
+            @magick ||= ::MiniMagick::Image.new(current_path)
+          end
         end
       end
     end
